@@ -1,7 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
 const app = express();
-
 import {GridFsStorage} from 'multer-gridfs-storage'
 import "express-async-errors";
 import dotenv from "dotenv";
@@ -50,7 +49,9 @@ import errorHandleMiddleware from "./middlewares/error-handle.js";
 import authenticateUser from "./middlewares/auth.js";
 import process from "process";
 
-app.use(express.json()); //this is a in-built middleware from express which provide us json data in case of patch and post requests
+// app.use(express.json());
+app.use(express.json({limit: '2mb'}));
+app.use(express.urlencoded({limit: '2mb', extended: false})); //this is a in-built middleware from express which provide us json data in case of patch and post requests
 
 app.use(helmet());
 app.use(xss());
@@ -65,6 +66,10 @@ app.use(mongoSanitize());
 app.use("/api/auth", authRouter);
 
 app.use("/api/files",authenticateUser,fileRouter);
+
+app.get('/',(req,res)=>{
+  res.send('home page')
+})
 
 
 //now our frontend will be serverd by express and every incoming get request(if it does not matches will job and user route ) will be redirected to the index.html(present inside of production ready build folder) and inside of index.html react-router is present which will take care of the further routing

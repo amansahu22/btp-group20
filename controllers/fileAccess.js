@@ -10,9 +10,9 @@ const Download = async (req, res) => {
 
 const checkHash = async (req,res) =>{
 
-  const {hashValue,email,users} = req.body;
+  const {hash,email,users} = req.body;
 
-  if(!hashValue || !email) throw new BadRequestError('Please provide email and hash')
+  if(!hash || !email) throw new BadRequestError('Please provide email and hash')
 
   const user = await User.findOne({ email });
 

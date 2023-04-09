@@ -63,10 +63,11 @@ app.use(mongoSanitize());
 //only when ready to deploy
 // app.use(express.static(path.resolve(__dirname, "./build")));
 
+const upload = multer({ dest: 'uploads/' })
 
 app.use("/api/auth", authRouter);
 
-app.use("/api/files",authenticateUser,fileRouter);
+app.use("/api/files",authenticateUser,upload.array('docs') ,fileRouter);
 
 app.get('/',(req,res)=>{
   res.status(StatusCodes.OK).send('welcome on home page')

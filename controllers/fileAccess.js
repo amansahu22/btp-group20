@@ -5,7 +5,14 @@ import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 import Chunks from "../models/Chunks.js";
 
 const Download = async (req, res) => {
-    res.status(StatusCodes.OK).send("file downloaded successfully")
+
+  const id = req.params.fileId;
+  console.log(id)
+  Chunks.find({ "configurations.uniqueFileId": { $eq: id} }).then(data=>{
+    console.log(data)
+    res.status(StatusCodes.OK).send(data)
+  })
+ 
 };
 
 const checkHash = async (req,res) =>{

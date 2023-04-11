@@ -40,12 +40,12 @@ const Upload = async (req, res) => {
     throw new BadRequestError("Please provide all values");
   }
 
-  const {email,uniqueFileId} = configurations;
+  const {email,uniqueFileId,fileName} = configurations;
 
   const user = await User.findOne({ email });
 
   if(!user.files.find(id=>id===uniqueFileId)){
-    user.files.push(uniqueFileId);
+    user.files.push({uniqueFileId,fileName});
     await user.save();
   }
 
@@ -74,6 +74,10 @@ const Upload = async (req, res) => {
   }
 };
 
+const getAllFileNames = (req,res)=>{
+  console.log(req.params)
+  return res.send("sending all files")
+}
 
 
-export { Download, Upload, checkHash};
+export { Download, Upload, checkHash , getAllFileNames};

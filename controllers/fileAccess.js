@@ -10,7 +10,7 @@ const Download = async (req, res) => {
 
 const checkHash = async (req,res) =>{
 
-  const {hash,email,users} = req.body;
+  const {hash,configurations:{email}} = req.body;
 
   if(!hash || !email) throw new BadRequestError('Please provide email and hash')
 
@@ -34,11 +34,13 @@ const checkHash = async (req,res) =>{
 }
 
 const Upload = async (req, res) => {
-  const { order, users, encrypted, hash, email } = req.body;
+  const { hash, encrypted, configurations } = req.body;
 
-   if (!order || !users || !encrypted || !hash || !email ) {
+   if (!configurations || !encrypted || !hash) {
     throw new BadRequestError("Please provide all values");
   }
+
+  const email = configurations.email;
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -46,10 +48,9 @@ const Upload = async (req, res) => {
   }
   // Create a new chunk object
   const newChunk = new Chunks({
-    order,
-    users,
     encrypted,
     hash,
+    configurations
   });
 
   try {

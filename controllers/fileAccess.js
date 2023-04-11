@@ -24,7 +24,7 @@ const checkHash = async (req,res) =>{
 
   if (chunk) {
     // Add the user to the list of users for this chunk
-    chunk.users.push(users[0]);
+    // chunk.users.push(users[0]);
     await chunk.save();
     return res.status(200).json({ success: true, message: "Chunk Found" });
   } else {

@@ -76,7 +76,7 @@ const Upload = async (req, res) => {
 
 const getAllFileNames = (req,res)=>{
   console.log(req.params)
-  return res.send("sending all files")
+  return res.send(req.params.email)
 }
 
 

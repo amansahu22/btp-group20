@@ -44,7 +44,12 @@ const Upload = async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if(!user.files.find(id=>id===uniqueFileId)){
+  if(user.files.length === 0){
+    user.files.push({uniqueFileId,fileName});
+    await user.save();
+  }
+
+  if( user.files.length !=0 && !user.files.find(el=>el.uniqueFileId===uniqueFileId)){
     user.files.push({uniqueFileId,fileName});
     await user.save();
   }

@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
     maxlength: 20,
     trim: true,
     default: "lastName",
+  },
+
+  files :{
+    type : Array
   }
 });
 

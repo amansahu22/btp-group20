@@ -40,13 +40,22 @@ const Upload = async (req, res) => {
     throw new BadRequestError("Please provide all values");
   }
 
-  const email = configurations.email;
+  const {email,uniqueFileId} = configurations;
+
   const user = await User.findOne({ email });
+
+  if(!user.files.find(id=>id===uniqueFileId)){
+    user.files.push(uniqueFileId);
+    await user.save();
+  }
 
   if (!user) {
     throw new UnAuthenticatedError("Invalid Credentials");
   }
   // Create a new chunk object
+
+
+
   const newChunk = new Chunks({
     encrypted,
     hash,

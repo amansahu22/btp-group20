@@ -6,10 +6,11 @@ const chunksSchema = new Schema(
   {
     // content: { type: String },
     // decrypted: { type: String },
-    order: { type: Number },
-    users: { type: Array },
     encrypted: { type: String },
     hash: { type: String },
+    configurations : {
+      type : Object
+    }
   },
   {
     timestamps: true,

@@ -10,7 +10,7 @@ router.post("/upload", Upload);
 
 router.post("/check-hash",checkHash);
 
-router.get("/get-files:/email",getAllFileNames);
+router.get("/get-files/:email",getAllFileNames);
 
 
 export default router;

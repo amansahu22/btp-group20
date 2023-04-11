@@ -14,14 +14,15 @@ const Register = async (req, res) => {
     throw new BadRequestError("Email already exist, provide different email");
   }
 
-  const user = await User.create({ name, email, password });
+  const files = [];
+  const user = await User.create({ name, email, password,files });
   const token = user.createJWT();
 
   const response = {
     user: {
       email: user.email,
       name: user.name,
-      lastName: user.lastName,
+      lastName: user.lastName
     },
     token,
   };

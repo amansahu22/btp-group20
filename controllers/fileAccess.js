@@ -74,9 +74,20 @@ const Upload = async (req, res) => {
   }
 };
 
-const getAllFileNames = (req,res)=>{
-  console.log(req.params)
-  return res.send(req.params.email)
+const getAllFileNames = async (req,res)=>{
+  const email = req.params.email;
+
+  if(!email) throw new BadRequestError('Please provide email and hash')
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new UnAuthenticatedError("Invalid Credentials");
+  }
+
+  const response = user.files;
+
+  res.status(StatusCodes.OK).send(response);
 }
 
 
